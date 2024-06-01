@@ -1,9 +1,7 @@
 import { getApps, initializeApp, FirebaseOptions } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-
+import { collection, getFirestore, query, where } from "firebase/firestore";
 
 export const firebaseConfig: FirebaseOptions = {
-  
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
   projectId: process.env.PROJECT_ID,
@@ -15,6 +13,10 @@ export const firebaseConfig: FirebaseOptions = {
 const app =
   getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
-  console.log(getApps().length)
 export default app;
 export const db = getFirestore(app);
+
+export const q = query(
+  collection(db, "Stores"),
+  where("users", "array-contains", "3fd79391d285277fe615b2b145637a71")
+);
